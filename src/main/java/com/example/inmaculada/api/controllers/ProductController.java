@@ -43,6 +43,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(iProductService.updateProduct(productDto));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(value = "/product/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         String result = iProductService.deleteProduct(id);
@@ -56,7 +57,6 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/product/filter")
     public ResponseEntity<List<ProductDto>> filterProductsByPrice(@RequestParam Double minPrice, @RequestParam Double maxPrice) {
         List<ProductDto> products = iProductService.findProductsByPrinceRange(minPrice, maxPrice);

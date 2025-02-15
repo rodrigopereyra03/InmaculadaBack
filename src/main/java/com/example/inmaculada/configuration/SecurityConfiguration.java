@@ -33,6 +33,16 @@ public class SecurityConfiguration {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/category").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/category").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/category/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/category").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/apí/product").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/apí/product").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/apí/product/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/product/search").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/product/{id}").permitAll()
 
                         .anyRequest().authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

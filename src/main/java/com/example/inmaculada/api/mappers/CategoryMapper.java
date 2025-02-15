@@ -1,8 +1,15 @@
 package com.example.inmaculada.api.mappers;
 
 import com.example.inmaculada.api.dto.CategoryDto;
+import com.example.inmaculada.api.dto.ProductDto;
 import com.example.inmaculada.domain.models.Category;
+import com.example.inmaculada.domain.models.Product;
 import lombok.experimental.UtilityClass;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class CategoryMapper {
@@ -12,7 +19,6 @@ public class CategoryMapper {
         category.setId(categoryDto.getId());
         category.setName(categoryDto.getName());
         category.setMainImage(categoryDto.getMainImage());
-        //category.setProducts(categoryDto.getProductDto());
         return category;
     }
 
@@ -21,7 +27,13 @@ public class CategoryMapper {
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setMainImage(category.getMainImage());
-        //categoryDto.setProductDto(category.getProducts());
+        // Mapear la lista de productos de Category a CategoryDto
+        List<ProductDto> productDtos = category.getProducts() != null
+                ? category.getProducts().stream()
+                .map(ProductMapper::productToDto)
+                .collect(Collectors.toList())
+                :Collections.emptyList();
+        categoryDto.setProductDto(productDtos);
         return categoryDto;
     }
 }
