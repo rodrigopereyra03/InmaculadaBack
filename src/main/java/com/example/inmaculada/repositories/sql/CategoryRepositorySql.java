@@ -2,10 +2,12 @@ package com.example.inmaculada.repositories.sql;
 
 import com.example.inmaculada.domain.models.Category;
 import com.example.inmaculada.repositories.ICategoryRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class CategoryRepositorySql implements ICategoryRepository {
 
     private final ICategoryRepositorySql repository;
