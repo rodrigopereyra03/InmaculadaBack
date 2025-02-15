@@ -1,13 +1,18 @@
 package com.example.inmaculada.api.mappers;
 
 import com.example.inmaculada.api.dto.ProductDto;
+import com.example.inmaculada.domain.exceptions.CategoryNotFoundException;
+import com.example.inmaculada.domain.models.Category;
 import com.example.inmaculada.domain.models.Product;
+import com.example.inmaculada.repositories.sql.ICategoryRepositorySql;
 import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @UtilityClass
 public class ProductMapper {
 
-    public static Product dtoToProduct(ProductDto dto){
+
+    public static Product dtoToProduct(ProductDto dto, Category category){
         Product product = new Product();
         product.setId(dto.getId());
         product.setName(dto.getName());
@@ -16,6 +21,7 @@ public class ProductMapper {
         product.setDescription(dto.getDescription());
         product.setImages(dto.getImages());
         product.setMainImage(dto.getMainImage());
+        product.setCategory(category);
 
         return product;
     }
@@ -29,6 +35,7 @@ public class ProductMapper {
         dto.setDescription(product.getDescription());
         dto.setImages(product.getImages());
         dto.setMainImage(product.getMainImage());
+        dto.setCategoryId(product.getCategory().getId());
         return dto;
     }
 }

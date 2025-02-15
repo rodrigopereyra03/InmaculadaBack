@@ -2,8 +2,11 @@ package com.example.inmaculada.services.impl;
 
 import com.example.inmaculada.api.dto.ProductDto;
 import com.example.inmaculada.api.mappers.ProductMapper;
+import com.example.inmaculada.domain.exceptions.CategoryNotFoundException;
 import com.example.inmaculada.domain.exceptions.ProductNotFoundException;
+import com.example.inmaculada.domain.models.Category;
 import com.example.inmaculada.domain.models.Product;
+import com.example.inmaculada.repositories.ICategoryRepository;
 import com.example.inmaculada.repositories.IProductRepository;
 import com.example.inmaculada.services.IProductService;
 import org.springframework.stereotype.Service;
@@ -15,13 +18,20 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements IProductService {
     private final IProductRepository repository;
+    private final ICategoryRepository categoryRepository;
 
-    public ProductServiceImpl(IProductRepository repository) {
+    public ProductServiceImpl(IProductRepository repository, ICategoryRepository categoryRepository) {
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
     }
     @Override
     public ProductDto createProduct(ProductDto productDto) {
-        Product product = ProductMapper.dtoToProduct(productDto);
+        Category category = categoryRepository.findById(productDto.getCategoryId())
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+
+        // ✅ Pasar la categoría al mapper
+        Product product = ProductMapper.dtoToProduct(productDto, category);
+
         return ProductMapper.productToDto(repository.save(product));
     }
 
@@ -69,7 +79,7 @@ public class ProductServiceImpl implements IProductService {
         }else{
             throw new ProductNotFoundException("Product not found with id");
         }
-
+        //TODO: CUANDO SE ACTUALIZA UN CAMPO, LOS CAMPOS QUANTITY Y PRICE VUELVEN A CERO
     }
 
     @Override

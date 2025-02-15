@@ -5,15 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
+
 @Data
-public class ProductDto {
+public class CategoryDto {
     private Long id;
     private String name;
-    private String description;
-    private int quantity;
-    private double price;
     private String mainImage;
-    private List<String> images;
-    private Long categoryId;
+    private List<ProductDto> productDto;
 
 }

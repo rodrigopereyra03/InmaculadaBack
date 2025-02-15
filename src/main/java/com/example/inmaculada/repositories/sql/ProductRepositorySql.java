@@ -2,10 +2,12 @@ package com.example.inmaculada.repositories.sql;
 
 import com.example.inmaculada.domain.models.Product;
 import com.example.inmaculada.repositories.IProductRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ProductRepositorySql implements IProductRepository {
 
     private final IProductRepositorySql repository;
