@@ -26,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product")
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        List<ProductDto> products = iProductService.getAllProducts();
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) Long categoryId) {
+        List<ProductDto> products = iProductService.getAllProducts(categoryId);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

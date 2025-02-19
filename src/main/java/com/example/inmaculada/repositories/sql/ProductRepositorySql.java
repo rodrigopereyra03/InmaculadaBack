@@ -50,4 +50,9 @@ public class ProductRepositorySql implements IProductRepository {
     public boolean existsById(Long id) {
         return repository.existsById(id);
     }
+
+    @Override
+    public List<Product> findByCategoryId(Long categoryId) {
+        return repository.findByCategoryId(categoryId);
+    }
 }

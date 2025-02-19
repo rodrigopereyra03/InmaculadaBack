@@ -16,4 +16,7 @@ public interface IProductRepositorySql extends JpaRepository<Product, Long> {
 
     // Nueva consulta para filtrar productos por rango de precios
     List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
+
+    @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId")
+    List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
 }
