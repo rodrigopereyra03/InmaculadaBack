@@ -41,9 +41,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT,"/api/product").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/product/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/product/search").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/product/category").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/product/{id}").permitAll()
-
+                        .requestMatchers(HttpMethod.GET,"/api/user").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/images").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
