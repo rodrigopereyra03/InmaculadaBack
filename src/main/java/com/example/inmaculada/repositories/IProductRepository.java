@@ -19,4 +19,6 @@ public interface IProductRepository {
     List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
     boolean existsById(Long id);
+
+    List<Product> findByCategoryId(Long categoryId);
 }

@@ -20,10 +20,11 @@ public class Product {
     private String description;
     private int quantity;
     private Double price;
+    @Column(length = 500)
     private String mainImage;
     @ElementCollection
     @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "image")
+    @Column(name = "image", length = 500)
     private List<String> images;
 
     @ManyToOne

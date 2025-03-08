@@ -36,8 +36,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        List<Product> products = repository.findAll();
+    public List<ProductDto> getAllProducts(Long categoryId) {
+        List<Product> products;
+
+        if (categoryId != null) {
+            products = repository.findByCategoryId(categoryId);
+        } else {
+            products = repository.findAll();
+        }
         return products.stream()
                 .map(ProductMapper::productToDto)
                 .toList();
