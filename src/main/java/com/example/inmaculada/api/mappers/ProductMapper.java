@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ProductMapper {
 
 
-    public static Product dtoToProduct(ProductDto dto, Category category){
+    public static Product dtoToProduct(ProductDto dto, Category category) {
+        if (category == null) {
+            throw new IllegalArgumentException("El categoryId de ProductDto es nulo y no se encontró la categoría");
+        }
         Product product = new Product();
         product.setId(dto.getId());
         product.setName(dto.getName());

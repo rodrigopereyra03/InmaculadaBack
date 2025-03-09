@@ -1,6 +1,7 @@
 package com.example.inmaculada.api.controllers;
 
 import com.example.inmaculada.domain.exceptions.ImageNotFoundException;
+import com.example.inmaculada.domain.exceptions.OrderNotFoundException;
 import com.example.inmaculada.domain.exceptions.ProductNotFoundException;
 import com.example.inmaculada.domain.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ public class GlobalExceptionHandler {
 //        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
 
-//    @ExceptionHandler(OrderNotFoundException.class)
-//    public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException ex) {
-//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException ex) {

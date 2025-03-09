@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class CategoryRepositorySql implements ICategoryRepository {
@@ -39,5 +40,10 @@ public class CategoryRepositorySql implements ICategoryRepository {
     @Override
     public boolean existsById(Long id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public List<Category> findAllById(Set<Long> ids) {
+        return repository.findAllById(ids);
     }
 }

@@ -34,21 +34,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String email;
 
+        System.out.println("🔹 Entrando en JwtAuthenticationFilter");
+
         if(StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader,"Bearer ")){
+            System.out.println("❌ No se encontró el header Authorization o no tiene formato Bearer");
             filterChain.doFilter(request,response);
             return;
         }
         jwt = authHeader.substring(7);
+        System.out.println("🔹 Token extraído: " + jwt);
         email = jwtUtil.extractUserName(jwt);
+        System.out.println("🔹 Usuario extraído del token: " + email);
 
         if(StringUtils.isNotEmpty(email) && SecurityContextHolder.getContext().getAuthentication() == null){
+            System.out.println("🔹 Cargando usuario desde UserDetailsService");
+
             UserDetails userDetails = userService.userDetailsService().loadUserByUsername(email);
             if (jwtUtil.isTokenValid(jwt,userDetails)){
+                System.out.println("✅ Token válido. Autenticando usuario...");
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
+            }else {
+                System.out.println("❌ Token inválido");
             }
         }
         filterChain.doFilter(request,response);
