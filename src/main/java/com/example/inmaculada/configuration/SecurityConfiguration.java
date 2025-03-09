@@ -34,6 +34,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/category").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/category/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/category").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/category/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/category").hasAuthority("ADMIN")
@@ -45,6 +46,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/product/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/images").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/api/orders").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/orders/comprobante-url").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"api/orders/{id}/comprobante-url").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"api/orders/{id}/status").authenticated()
                         .anyRequest().authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
